@@ -10,6 +10,13 @@ Service created for the study of micronaut and kotlin, also has a GRPC part
 
 3 - ```./gradlew generateProto```
 
+## Http Request
+
+To use Http, you can use [Insomnia](https://insomnia.rest/download/core/?&ref=https%3A%2F%2Fwww.google.com.br%2F). The collection is in the docs folder, only imports
+
+## GRPC 
+
+To use GRPC, you can use [Bloom RPC](https://github.com/uw-labs/bloomrpc). Only import the proto file, which is located in the ```src/main/proto``` folder
 
 ----
 ##### Warn: Before starts the service run the postgres through docker-compose
