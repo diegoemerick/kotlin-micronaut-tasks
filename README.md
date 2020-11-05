@@ -4,11 +4,13 @@ Service created for the study of micronaut and kotlin, also has a GRPC part
 
 ## How to run this project
 
-1 - ```./gradlew clean```
+JDK 11
 
-2 - ```./gradlew build```
+1 - ```gradle clean```
 
-3 - ```./gradlew generateProto```
+2 - ```gradle build -Dorg.gradle.java.home=<JDK_HOME>```
+
+3 - ```gradle run -Dorg.gradle.java.home=<JDK_HOME>```
 
 ## Http Request
 

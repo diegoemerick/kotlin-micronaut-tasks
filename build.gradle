@@ -2,10 +2,8 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.4.10"
     id "org.jetbrains.kotlin.kapt" version "1.4.10"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10"
-    id "com.github.johnrengelman.shadow" version "6.0.0"
     id "io.micronaut.application" version '1.0.5'
     id 'com.google.protobuf' version '0.8.13'
-    id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
 }
 
 version "0.1"
@@ -27,9 +25,9 @@ micronaut {
 }
 
 dependencies {
-
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
 
+    implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     implementation("io.micronaut:micronaut-validation")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
@@ -41,7 +39,6 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-hibernate-jpa")
     implementation("org.apache.logging.log4j:log4j-core:2.12.1")
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
     implementation("io.micronaut.grpc:micronaut-grpc-server-runtime:${micronautGrpcVersion}")
     implementation("io.micronaut.grpc:micronaut-grpc-client-runtime:${micronautGrpcVersion}")
@@ -51,6 +48,16 @@ dependencies {
     runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    kaptTest("io.micronaut:micronaut-inject-java")
+
+    testImplementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.0")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testImplementation("org.mockito:mockito-junit-jupiter:2.22.0")
+
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.0")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
 
     compile(group: 'org.postgresql', name: 'postgresql', version: '42.2.18')
 }
@@ -69,6 +76,7 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = '11'
+        javaParameters = true
     }
 }
 
@@ -100,3 +108,4 @@ protobuf {
         }
     }
 }
+
