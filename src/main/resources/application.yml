@@ -15,3 +15,11 @@ jpa:
       hibernate:
         bytecode:
           provider: none
+grpc:
+  server:
+    port: 3009
+    keep-alive-time: 3h
+    max-inbound-message-size: 1024
+    ssl:
+      cert-chain: 'file://path/to/my.cert'
+      private-key: 'classpath:my.key'

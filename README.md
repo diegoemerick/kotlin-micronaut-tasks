@@ -1,13 +1,18 @@
-## Feature http-client documentation
+# Bepy Task
 
-- [Micronaut Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+Service created for the study of micronaut and kotlin, also has a GRPC part
 
-## Feature jdbc-hikari documentation
+## How to run this project
 
-- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+1 - ```./gradlew clean```
 
-## Feature hibernate-jpa documentation
+2 - ```./gradlew build```
 
-- [Micronaut Hibernate JPA documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate)
+3 - ```./gradlew generateProto```
 
-https://medium.com/@jvoliveiran/micronaut-uma-vis%C3%A3o-geral-1f640c5a7ad4#:~:text=Lan%C3%A7ado%20oficialmente%20em%2023%20de%20outubro%20de%202018%2C%20o%20Micronaut,forma%20modular%20e%20facilmente%20test%C3%A1vel.
+## Refs
+* [Micronaut About](https://medium.com/@jvoliveiran/micronaut-uma-vis%C3%A3o-geral-1f640c5a7ad4#:~:text=Lan%C3%A7ado%20oficialmente%20em%2023%20de%20outubro%20de%202018%2C%20o%20Micronaut,forma%20modular%20e%20facilmente%20test%C3%A1vel.)
+* [Micronaut Postgres](https://dzone.com/articles/micronaut-cloud-jpa)
+* [Micronaut JPA](https://guides.micronaut.io/micronaut-data-access-jpa-hibernate/guide/index.html)
+* [Micronaut GRPC](https://micronaut-projects.github.io/micronaut-grpc/snapshot/guide/index.html)
+* [GRPC About](https://grpc.io/docs/languages/kotlin/)

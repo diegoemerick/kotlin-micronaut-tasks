@@ -4,6 +4,8 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10"
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "io.micronaut.application" version '1.0.5'
+    id 'com.google.protobuf' version '0.8.13'
+    id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
 }
 
 version "0.1"
@@ -12,6 +14,7 @@ group "com.bepy"
 repositories {
     mavenCentral()
     jcenter()
+    google()
 }
 
 micronaut {
@@ -38,9 +41,17 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-hibernate-jpa")
     implementation("org.apache.logging.log4j:log4j-core:2.12.1")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
+    implementation("io.micronaut.grpc:micronaut-grpc-server-runtime:${micronautGrpcVersion}")
+    implementation("io.micronaut.grpc:micronaut-grpc-client-runtime:${micronautGrpcVersion}")
+    implementation("io.micronaut.grpc:micronaut-protobuff-support:${micronautGrpcVersion}")
+    implementation("io.grpc:grpc-kotlin-stub:${grpcKotlinVersion}")
+
     runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
     compile(group: 'org.postgresql', name: 'postgresql', version: '42.2.18')
 }
 
@@ -52,6 +63,7 @@ java {
 compileKotlin {
     kotlinOptions {
         jvmTarget = '11'
+        javaParameters = true
     }
 }
 compileTestKotlin {
@@ -60,6 +72,31 @@ compileTestKotlin {
     }
 }
 
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
 
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/grpckt'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
 
-
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+        grpckt { artifact = "io.grpc:protoc-gen-grpc-kotlin:${grpcKotlinVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+            grpckt {}
+        }
+    }
+}

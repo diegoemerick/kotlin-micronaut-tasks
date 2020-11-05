@@ -5,10 +5,13 @@ import com.bepy.domain.enumerated.StatusEnum
 import com.bepy.domain.exception.TaskNotFoundException
 import com.bepy.domain.model.Task
 import com.bepy.infrastructure.TaskRepository
+import helloworld.TaskResponse
+import helloworld.TasksResponse
 import java.util.*
 import java.util.stream.Collectors
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.ArrayList
 
 @Singleton
 class TaskService(@Inject val repository: TaskRepository) {
@@ -44,6 +47,23 @@ class TaskService(@Inject val repository: TaskRepository) {
                 }.collect(Collectors.toList())
 
         return list
+    }
+
+    fun getTasksGrpc(): TasksResponse {
+        val tasks: MutableList<TaskEntity?> = this.repository.findAll()
+        val list = TasksResponse.newBuilder()
+
+        tasks.stream()
+                .map { task ->
+                    list.addTasks(
+                            TaskResponse.newBuilder()
+                                    .setId(task?.id!!)
+                                    .setTitle(task.title)
+                                    .setStatus(StatusEnum.values()[task.status].description).build())
+                }
+                .collect(Collectors.toList())
+
+        return list.build()
     }
 
     fun toWaitTask(id: Int) {
